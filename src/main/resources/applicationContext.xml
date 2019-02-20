@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+    bean:指定容器管理对象
+    id:唯一标识符,用于获取对象
+    class:对象类型
+    -->
+    <bean id="girl" class="com.lanou.xml.Girl"/>
+    <bean id="dog" class="com.lanou.xml.Dog"/>
+    <bean id="boy" class="com.lanou.xml.Boy"/>
+
+
+    <!--属性注入-->
+    <bean id="girl2" class="com.lanou.xml.Girl">
+        <!--
+        property:用于指定属性的值
+        name:属性名,比如:基本数据类型,字符串
+        value:属性值,比如:引用类型
+        -->
+        <property name="boyFrirnd" ref="boy"/>
+        <property name="dog" ref="dog"/>
+    </bean>
+
+    <!--构造方法注入-->
+    <bean id="girl3" class="com.lanou.xml.Girl">
+        <!--
+        constructor-arg:配置构造方法的参数
+        name:参数名(形参)
+        ref:参数值(实参)
+        -->
+
+        <constructor-arg name="dog" ref="dog"/>
+        <constructor-arg name="boyFrirnd" ref="boy"/>
+    </bean>
+
+    <!--非静态工厂方法-->
+    <bean name="girlFactory" class="com.lanou.xml.GirlFactory"/>
+    <bean id="girl4" factory-bean="girlFactory" factory-method="createGirl">
+    </bean>
+    <!--静态工厂方法-->
+    <bean id="girl5" class="com.lanou.xml.GirlFactory" factory-method="makeGirl"/>
+
+    <!--不同类型的属性注入-->
+    <bean id="person" class="com.lanou.xml.Person">
+        <property name="a" value="1"/>
+        <!--<property name="b"><value>abc</value></property>-->
+        <property name="b"><null/></property>
+        <property name="c" ref="dog"/>
+        <property name="d">
+            <array>
+                <value>123</value>
+                <value>173</value>
+                <value>198</value>
+            </array>
+        </property>
+
+        <property name="e">
+            <list>
+                <value>ab</value>
+                <value>cfd</value>
+                <value>adb</value>
+            </list>
+        </property>
+
+        <property name="f">
+            <set>
+                <value>123</value>
+                <value>193</value>
+                <value>103</value>
+            </set>
+        </property>
+
+        <property name="g">
+            <map>
+                <entry key="a" value="1"/>
+                <entry key="a" value="1"/>
+                <entry key="a" value="1"/>
+            </map>
+        </property>
+        <property name="h">
+            <props>
+                <prop key="a">1</prop>
+                <prop key="b">2</prop>
+                <prop key="c">3</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <bean id="cat" class="com.lanou.xml.Cat" scope="singleton"/>
+    <bean id="cat1" class="com.lanou.xml.Cat" scope="prototype"/>
+
+    <!--
+    init-method:当对象初始化调用该方法
+    destroy-method:当对象销毁时调用的方法
+    -->
+
+    <bean id="cat2" class="com.lanou.xml.Cat" init-method="init" destroy-method="destroy"/>
+
+
+
+
+
+
+
+</beans>
